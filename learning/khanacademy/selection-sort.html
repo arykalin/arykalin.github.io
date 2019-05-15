@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project: Selection Sort Visualizer</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../css/ka-projects.css' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="../../js/vendor/processing.min.js"></script>
+</head>
+<body>
+<div class="container-khanacademy">
+    <div class="container-text">
+        <h2>Selection Sort Visualizer</h2>
+        <p>The goal of this project was to create a program that visualizes
+            the selection sort algorithm. Here, there are four different matrices
+            aligned vertically. Each of them has lines that show the steps/swaps
+            of this algorithm.</p>
+    </div>
+    <div class="container-program">
+        <canvas id="canvas"></canvas>
+        <!-- Credits to Robert Tupelo-Schneck for this processingJS template -->
+        <script>var displayArray = function(array) {
+                textFont(createFont("monospace"), 12);
+
+            };
+
+            var swap = function(array, firstIndex, secondIndex) {
+                var temp = array[firstIndex];
+                array[firstIndex] = array[secondIndex];
+                array[secondIndex] = temp;
+            };
+
+            var indexOfMinimum = function(array, startIndex) {
+
+                var minValue = array[startIndex];
+                var minIndex = startIndex;
+
+                for(var i = minIndex + 1; i < array.length; i++) {
+                    if(array[i] < minValue) {
+                        minIndex = i;
+                        minValue = array[i];
+                    }
+                }
+                return minIndex;
+            };
+
+            var selectionSort = function(array) {
+                var pos = 0;
+                for(pos ; pos < array.length ;pos++ ) {
+                    println("Looking at pos "+pos);
+                    var mi = indexOfMinimum(array, pos);
+                    println("Index of minimum at start "+pos+" is "+mi+" which is number "+array[mi]);
+                    swap(array,pos ,mi );
+                    println("array after swap is: "+array);
+                }
+            };
+
+            var array = [2, 1];
+            array = selectionSort(array);
+
+            rect(100, 150, 200, 100);
+            line(100, 50, 300, 175);
+        </script>
+    </div>
+</div>
+</body>
+</html>
