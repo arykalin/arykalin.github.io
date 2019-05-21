@@ -25,11 +25,20 @@
                 processing.size(400, 400);
                 processing.background(0xFFF);
                 var mouseIsPressed = false;
-                processing.mousePressed = function () { mouseIsPressed = true; };
-                processing.mouseReleased = function () { mouseIsPressed = false; };
+                processing.mousePressed = function() {
+                    mouseIsPressed = true;
+                };
+                processing.mouseReleased = function() {
+                    mouseIsPressed = false;
+                };
                 var keyIsPressed = false;
-                processing.keyPressed = function () { keyIsPressed = true; };
-                processing.keyReleased = function () { keyIsPressed = false; };
+                processing.keyPressed = function() {
+                    keyIsPressed = true;
+                };
+                processing.keyReleased = function() {
+                    keyIsPressed = false;
+                };
+
                 function getImage(s) {
                     var url = "https://www.kasandbox.org/programming-images/" + s + ".png";
                     processing.externals.sketch.imageCache.add(url);
@@ -37,65 +46,69 @@
                 }
                 // use degrees rather than radians in rotate function
                 var rotateFn = processing.rotate;
-                processing.rotate = function (angle) {
+                processing.rotate = function(angle) {
                     rotateFn(processing.radians(angle));
                 };
-                with (processing) {
+                with(processing) {
                     // Set background color at the top so that
                     // it does not interfere with the text output
                     background(0);
                     // Number of pixels between each row of array sorts
                     var spaceBetween = 85;
-                    var yPos= 0;
+                    var yPos = 0;
                     // Draw the lines separating the different arrays
-                    for (var l = 0; l < (9/10)*width; l += 94) {
-                        stroke(255, 0, 0);
+                    for (var l = 0; l < (9 / 10) * width; l += 94) {
+                        stroke(25,25,112);
                         line(l, 0, l, height);
                     }
-            /************************
-             * Visualize the array *
-             ************************/
-             var displayArray = function(array) {
-                textFont(createFont("monospace"), 12);
+                    /************************
+                     * Visualize the array *
+                     ************************/
+                    var displayArray = function(array) {
+                        textFont(createFont("monospace"), 12);
+                        fill(135,206,250);
+                    };
 
-            };
+                    var swap = function(array, firstIndex, secondIndex) {
+                        var temp = array[firstIndex];
+                        array[firstIndex] = array[secondIndex];
+                        array[secondIndex] = temp;
+                    };
 
-            var swap = function(array, firstIndex, secondIndex) {
-                var temp = array[firstIndex];
-                array[firstIndex] = array[secondIndex];
-                array[secondIndex] = temp;
-            };
+                    var indexOfMinimum = function(array, startIndex) {
 
-            var indexOfMinimum = function(array, startIndex) {
+                        var minValue = array[startIndex];
+                        var minIndex = startIndex;
 
-                var minValue = array[startIndex];
-                var minIndex = startIndex;
+                        for (var i = minIndex + 1; i < array.length; i++) {
+                            if (array[i] < minValue) {
+                                minIndex = i;
+                                minValue = array[i];
+                            }
+                        }
+                        displayArray(array)
+                        return minIndex;
+                    };
 
-                for(var i = minIndex + 1; i < array.length; i++) {
-                    if(array[i] < minValue) {
-                        minIndex = i;
-                        minValue = array[i];
-                    }
+                    var selectionSort = function(array) {
+                        var pos = 0;
+                        for (pos; pos < array.length; pos++) {
+                            println("Looking at pos " + pos);
+                            var mi = indexOfMinimum(array, pos);
+                            println("Index of minimum at start " + pos + " is " + mi + " which is number " + array[mi]);
+                            swap(array, pos, mi);
+                            println("array after swap is: " + array);
+                        }
+                    };
+
+                    var array = [2, 1];
+                    array = selectionSort(array);
+
+                    rect(100, 150, 200, 100);
+                    line(100, 50, 300, 175);
                 }
-                return minIndex;
-            };
-
-            var selectionSort = function(array) {
-                var pos = 0;
-                for(pos ; pos < array.length ;pos++ ) {
-                    println("Looking at pos "+pos);
-                    var mi = indexOfMinimum(array, pos);
-                    println("Index of minimum at start "+pos+" is "+mi+" which is number "+array[mi]);
-                    swap(array,pos ,mi );
-                    println("array after swap is: "+array);
-                }
-            };
-
-            var array = [2, 1];
-            array = selectionSort(array);
-
-            rect(100, 150, 200, 100);
-            line(100, 50, 300, 175);
+                if (typeof draw !== 'undefined') processing.draw = draw;
+            });
         </script>
     </div>
 </div>
