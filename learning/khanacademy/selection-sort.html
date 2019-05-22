@@ -29,7 +29,7 @@
         <script>
             var canvas = document.getElementById("canvas");
             var processing = new Processing(canvas, function(processing) {
-                processing.size(400, 400);
+                processing.size(800, 500);
                 processing.background(0xFFF);
                 var mouseIsPressed = false;
                 processing.mousePressed = function() {
@@ -46,25 +46,13 @@
                     keyIsPressed = false;
                 };
 
-                function getImage(s) {
-                    var url = "https://www.kasandbox.org/programming-images/" + s + ".png";
-                    processing.externals.sketch.imageCache.add(url);
-                    return processing.loadImage(url);
-                }
-                // use degrees rather than radians in rotate function
                 var rotateFn = processing.rotate;
                 processing.rotate = function(angle) {
                     rotateFn(processing.radians(angle));
                 };
                 with(processing) {
-                    // Set background color at the top so that
-                    // it does not interfere with the text output
                     background(0);
-                    // Number of pixels between each row of array sorts
-                    var spaceBetween = 85;
-                    var yPos = 0;
-                    // Draw the lines separating the different arrays
-                    for (var l = 0; l < (9 / 10) * width; l += 94) {
+                    for (var l = 0; l < (9 / 10) * width; l += 200) {
                         stroke(25,25,112);
                         line(l, 0, l, height);
                     }
@@ -75,7 +63,7 @@
                         textFont(createFont("monospace"), 12);
                         fill(255, 255, 0);
                         // text(array, 15 + pos, 40 + step);
-                        text(array, 1, 40 + step);
+                        text(array, step, 40 + pos);
                     };
 
                     var swap = function(array, firstIndex, secondIndex) {
@@ -99,11 +87,10 @@
                         return minIndex;
                     };
 
-                    var selectionSort = function(array) {
+                    var selectionSort = function(array, canvas_step) {
                         var pos = 0;
                         for(pos ; pos < array.length ;pos++ ) {
                             println("Looking at pos "+pos);
-                            canvas_step = pos*40;
                             canvas_pos = pos*50;
                             var mi = indexOfMinimum(array, pos, canvas_pos, canvas_step);
                             println("Index of minimum at start "+pos+" is "+mi+" which is number "+array[mi]);
@@ -113,16 +100,16 @@
                     };
 
                     var array1 = [2, 1, 5, 78,67,4];
-                    array = selectionSort(array1);
+                    array = selectionSort(array1,10);
 
                     var array2 = [34,7,12,34,7,89,113];
-                    array = selectionSort(array2);
+                    array = selectionSort(array2,210);
 
                     var array3 = [2, 1, 5, 78,67,4,12444];
-                    array = selectionSort(array3);
+                    array = selectionSort(array3,410);
 
                     var array4 = [2, 1, 5, 78,67,4];
-                    array = selectionSort(array4);
+                    array = selectionSort(array4,610);
                 }
                 if (typeof draw !== 'undefined') processing.draw = draw;
             });
