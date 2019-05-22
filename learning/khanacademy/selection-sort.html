@@ -11,10 +11,17 @@
 <div class="container-khanacademy">
     <div class="container-text">
         <h2>Selection Sort Visualizer</h2>
-        <p>The goal of this project was to create a program that visualizes
-            the selection sort algorithm. Here, there are four different matrices
-            aligned vertically. Each of them has lines that show the steps/swaps
-            of this algorithm.</p>
+        <p>In this project, you'll visualize the swapping strategy of selection sort, similar to the screenshot on the
+            right.
+
+            To start off with, you'll need to bring in the selection sort algorithm code from the last challenge. Then,
+            come up with an array of data and send that through the algorithm. For each iteration of the algorithm,
+            display the current state of the array on the canvas, and then draw a line or arrow that shows the numbers
+            being swapped.
+
+            Once you've successfully displayed the array being sorted, create 3 more arrays and display them as well,
+            in a quadrant on the canvas. Create one array with reverse sorted values, one array where a few values are
+            the same, and one array where only one value is out of order..</p>
     </div>
     <div class="container-program">
         <<canvas id="canvas"></canvas>
@@ -64,9 +71,11 @@
                     /************************
                      * Visualize the array *
                      ************************/
-                    var displayArray = function(array) {
+                    var displayArray = function(array, pos, step) {
                         textFont(createFont("monospace"), 12);
-                        fill(135,206,250);
+                        fill(255, 255, 0);
+                        // text(array, 15 + pos, 40 + step);
+                        text(array, 1, 40 + step);
                     };
 
                     var swap = function(array, firstIndex, secondIndex) {
@@ -75,37 +84,45 @@
                         array[secondIndex] = temp;
                     };
 
-                    var indexOfMinimum = function(array, startIndex) {
+                    var indexOfMinimum = function(array, startIndex, pos, step) {
 
                         var minValue = array[startIndex];
                         var minIndex = startIndex;
 
-                        for (var i = minIndex + 1; i < array.length; i++) {
-                            if (array[i] < minValue) {
+                        for(var i = minIndex + 1; i < array.length; i++) {
+                            if(array[i] < minValue) {
                                 minIndex = i;
                                 minValue = array[i];
                             }
                         }
-                        displayArray(array)
+                        displayArray(array, pos, step);
                         return minIndex;
                     };
 
                     var selectionSort = function(array) {
                         var pos = 0;
-                        for (pos; pos < array.length; pos++) {
-                            println("Looking at pos " + pos);
-                            var mi = indexOfMinimum(array, pos);
-                            println("Index of minimum at start " + pos + " is " + mi + " which is number " + array[mi]);
-                            swap(array, pos, mi);
-                            println("array after swap is: " + array);
+                        for(pos ; pos < array.length ;pos++ ) {
+                            println("Looking at pos "+pos);
+                            canvas_step = pos*40;
+                            canvas_pos = pos*50;
+                            var mi = indexOfMinimum(array, pos, canvas_pos, canvas_step);
+                            println("Index of minimum at start "+pos+" is "+mi+" which is number "+array[mi]);
+                            swap(array,pos ,mi );
+                            println("array after swap is: "+array);
                         }
                     };
 
-                    var array = [2, 1];
-                    array = selectionSort(array);
+                    var array1 = [2, 1, 5, 78,67,4];
+                    array = selectionSort(array1);
 
-                    rect(100, 150, 200, 100);
-                    line(100, 50, 300, 175);
+                    var array2 = [34,7,12,34,7,89,113];
+                    array = selectionSort(array2);
+
+                    var array3 = [2, 1, 5, 78,67,4,12444];
+                    array = selectionSort(array3);
+
+                    var array4 = [2, 1, 5, 78,67,4];
+                    array = selectionSort(array4);
                 }
                 if (typeof draw !== 'undefined') processing.draw = draw;
             });
