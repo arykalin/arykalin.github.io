@@ -63,6 +63,7 @@
                         textFont(createFont("monospace"), 12);
                         fill(0);
                         // text(array, 15 + pos, 40 + step);
+                        println("Drawing array from "+step);
                         text(array, step, 40 + pos);
                     };
 
@@ -72,7 +73,7 @@
                         array[secondIndex] = temp;
                     };
 
-                    var indexOfMinimum = function(array, startIndex, pos, step) {
+                    var indexOfMinimum = function(array, startIndex, canvas_pos, step) {
 
                         var minValue = array[startIndex];
                         var minIndex = startIndex;
@@ -83,8 +84,21 @@
                                 minValue = array[i];
                             }
                         }
-                        line(step+minIndex*10,pos+50,step+25,pos+(+minIndex*10)+10);
-                        displayArray(array, pos, step);
+                        var x1 = step+(startIndex*8)+(minIndex*8)+10;
+                        println("step:"+step+"+startIndex:"+startIndex+"+minIndex:"+minIndex+"+"+10);
+                        var y1 = canvas_pos+50;
+                        var x2 = step+(startIndex*8)+(minIndex*8)+10;
+                        var y2 = canvas_pos+70;
+                        println("Drawing a line at x1:"+x1+" y1:"+y1+" x2:"+x2+" y2:"+y2);
+                        line(x1,y1,x2,y2);
+                        strokeWeight(3);
+                        point(x1,y1);
+                        strokeWeight(1);
+                        displayArray(array, canvas_pos, step);
+                        // x1 = 0;
+                        // x2 = 0;
+                        // y1 = 0;
+                        // y2 = 0;
                         return minIndex;
                     };
 
@@ -94,23 +108,23 @@
                             println("Looking at pos "+pos);
                             canvas_pos = pos*50;
                             var mi = indexOfMinimum(array, pos, canvas_pos, canvas_step);
-                            println("Index of minimum at start "+pos+" is "+mi+" which is number "+array[mi]);
-                            swap(array,pos ,mi );
+                            println("Index of minimum of array "+array+" at start "+pos+" is "+mi+" which is number "+array[mi]);
+                            swap(array,pos ,mi);
                             println("array after swap is: "+array);
                         }
                     };
 
-                    var array1 = [2, 1, 5, 78,67,4];
+                    var array1 = [67,2, 1, 5, 78];
                     array = selectionSort(array1,10);
-
-                    var array2 = [34,7,12,34,7,89,113];
-                    array = selectionSort(array2,210);
-
-                    var array3 = [2, 1, 5, 78,67,4,12444];
-                    array = selectionSort(array3,410);
-
-                    var array4 = [45,7,3,67,123,5,6];
-                    array = selectionSort(array4,610);
+                    //
+                    // var array2 = [34,7,12,34,7,89,113];
+                    // array = selectionSort(array2,210);
+                    //
+                    // var array3 = [2, 16, 5, 1, 78,67,4,12444];
+                    // array = selectionSort(array3,410);
+                    //
+                    // var array4 = [45,7,3,67,123,5,6,1];
+                    // array = selectionSort(array4,610);
                 }
                 if (typeof draw !== 'undefined') processing.draw = draw;
             });
