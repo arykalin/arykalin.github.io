@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project: Selection Sort Visualizer</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../css/ka-projects.css' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="../../js/vendor/processing.min.js"></script>
+</head>
+<body>
+<div class="container-khanacademy">
+    <div class="container-text">
+        <h2>Insertion Sort</h2>
+    </div>
+    <div class="container-program">
+        <canvas id="canvas"></canvas>
+        <!-- Credits to Robert Tupelo-Schneck for this processingJS template -->
+        <script>
+            var canvas = document.getElementById("canvas");
+            var processing = new Processing(canvas, function (processing) {
+                with (processing) {
+                    /************************
+                     * Main program *
+                     ************************/
+                    var insert = function (array, rightIndex, value) {
+
+                    };
+
+                    var array = [3, 5, 7, 11, 13, 2, 9, 6];
+
+                    insert(array, 4, 2);
+                    println("Array after inserting 2:  " + array);
+                    //Program.assertEqual(array, [2, 3, 5, 7, 11, 13, 9, 6]);
+
+                    insert(array, 5, 9);
+                    println("Array after inserting 9:  " + array);
+                    //Program.assertEqual(array, [2, 3, 5, 7, 9, 11, 13, 6]);
+
+                    insert(array, 6, 6);
+                    println("Array after inserting 6:  " + array);
+                    //Program.assertEqual(array, [2, 3, 5, 6, 7, 9, 11, 13]);
+                }
+                if (typeof draw !== 'undefined') processing.draw = draw;
+            });
+        </script>
+    </div>
+</div>
+</body>
+</html>
