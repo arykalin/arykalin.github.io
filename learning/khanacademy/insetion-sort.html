@@ -19,11 +19,22 @@
             var canvas = document.getElementById("canvas");
             var processing = new Processing(canvas, function (processing) {
                 with (processing) {
+                    processing.size(800, 500);
+                    processing.background(0xFFF);
+                    background(255, 255, 255);
                     /************************
                      * Main program *
                      ************************/
                     var insert = function (array, rightIndex, value) {
-
+                        textFont(createFont("monospace"), 12);
+                        fill(0);
+                        // text("Inserting into array " + array + " from right index " + rightIndex, 100, 100);
+                        println("Inserting into array " + array + " from right index " + rightIndex);
+                        var key_pos;
+                        for(key_pos = array.lenght - rightIndex; key_pos < rightIndex ; key_pos--) {
+                            println("Key pos is " + key_pos);
+                            array[rightIndex + 1] = value;
+                        }
                     };
 
                     var array = [3, 5, 7, 11, 13, 2, 9, 6];
