@@ -28,7 +28,7 @@
                     var insert = function (array, rightIndex, value) {
                         println("Inserting "+value+" into array " + array + " from right index " + rightIndex +" - "+array[rightIndex]);
                         var pos;
-                        for(pos = rightIndex;array[pos] > value; pos--) {
+                        for(pos = rightIndex;pos >= 0 && array[pos] > value; pos--) {
                             println("will shift pos "+pos+" while value "+value+" is more than "+array[pos]);
                             array[pos + 1] = array[pos];
                             println("array after shifiting to the right is "+array);
