@@ -26,31 +26,25 @@
                      * Main program *
                      ************************/
                     var insert = function (array, rightIndex, value) {
-                        textFont(createFont("monospace"), 12);
-                        fill(0);
-                        // text("Inserting into array " + array + " from right index " + rightIndex, 100, 100);
-                        println("Inserting into array " + array + " from right index " + rightIndex);
-                        var key_pos;
-                        println("array lenght: "+array.length);
-                        println("right index: "+rightIndex);
-                        println("value is: "+value);
-                        for(key_pos = rightIndex; key_pos > 0 ; key_pos--) {
-                            println("key_pos is: " + key_pos);
-                            var check_number = array[key_pos];
-                            println("Checking number "+check_number+" at index of "+key_pos+" on arr "+array);
-                            array[key_pos + 1] = array[key_pos];
-                            println("array after copying value to the right is "+array);
+                        println("Inserting "+value+" into array " + array + " from right index " + rightIndex);
+                        var pos;
+                        for(pos = rightIndex; value < array[pos] ; pos--) {
+                            println("shift_pos is: " + pos);
+                            println("will shift while value "+value+" is more than "+array[pos]);
+                            array[pos + 1] = array[pos];
+                            println("array after shifiting to the right is "+array);
                         }
+                        println("array after inserting value is "+array);
                     };
                     var array = [3, 5, 7, 11, 13, 2, 9, 6];
                     insert(array, 4, 2);
                     println("Array after inserting 2:  " + array);
                     //Program.assertEqual(array, [2, 3, 5, 7, 11, 13, 9, 6]);
-                    insert(array, 5, 9);
-                    println("Array after inserting 9:  " + array);
+                    // insert(array, 5, 9);
+                    // println("Array after inserting 9:  " + array);
                     //Program.assertEqual(array, [2, 3, 5, 7, 9, 11, 13, 6]);
-                    insert(array, 6, 6);
-                    println("Array after inserting 6:  " + array);
+                    // insert(array, 6, 6);
+                    // println("Array after inserting 6:  " + array);
                     //Program.assertEqual(array, [2, 3, 5, 6, 7, 9, 11, 13]);
 
                 }
