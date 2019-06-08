@@ -37,16 +37,26 @@
                         array[pos+1] = value;
                         println("array after inserting value is "+array);
                     };
-                    var array = [3, 5, 7, 11, 13, 2, 9, 6];
-                    insert(array, 4, 2);
-                    println("Array after inserting 2:  " + array);
-                    Program.assertEqual(array, [2, 3, 5, 7, 11, 13, 9, 6]);
-                    insert(array, 5, 9);
-                    println("Array after inserting 9:  " + array);
-                    Program.assertEqual(array, [2, 3, 5, 7, 9, 11, 13, 6]);
-                    insert(array, 6, 6);
-                    println("Array after inserting 6:  " + array);
-                    Program.assertEqual(array, [2, 3, 5, 6, 7, 9, 11, 13]);
+
+                    var insertionSort = function(array) {
+                        println("array is "+array+" with length "+array.length);
+                        var l = array.length;
+                        for(var i = 1; i < l;i++ ) {
+                            println("Calling insert to insert elem "+array[i]+" into right index "+i);
+                            insert(array,i-1,array[i]);
+                            println("Array after insert:  " + array);
+                        }
+
+                    };
+
+                    var array = [22, 11, 99, 88, 9, 7, 42];
+                    insertionSort(array);
+                    println("Array after sorting:  " + array);
+                    // Program.assertEqual(array, [7, 9, 11, 22, 42, 88, 99]);
+                    var array = [3, 5, 7, 11, 13, 2, 9, 6, -5,0];
+                    insertionSort(array);
+                    println("Array after sorting:  " + array);
+                    // Program.assertEqual(array, [-5,0,2,3,5,6,7,9,11,13]);
 
                 }
                 if (typeof draw !== 'undefined') processing.draw = draw;
