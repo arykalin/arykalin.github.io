@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Project: Selection Sort Visualizer</title>
+<meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='../../css/ka-projects.css' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="../../js/vendor/processing.min.js"></script>
+    </head>
+    <body>
+    <div class="container-khanacademy">
+    <div class="container-text">
+    <h2>Recursive art</h2>
+<p>One of the fun ways to apply the principles of recursion is to generate swirling, spiraling, tessellating art, by deciding what you're drawing, how to change it at each level of recursion, and when to stop. We've started a simple example below, but want you to take it way beyond that, by:
+
+    Adding color: And not just the same boring color each time, change it in some way as the function recurses.
+    Changing the shape: Ovals, rectangles, curves, images, perhaps even alternating shapes at different levels.
+    Using multiple recursion: Call the drawShape function multiple times inside itself, so that each level draws multiple shapes offset or rotated from one another in some way.</p>
+</div>
+<div class="container-program">
+    <<canvas id="canvas"></canvas>
+    <!-- Credits to Robert Tupelo-Schneck for this processingJS template -->
+    <script>
+var canvas = document.getElementById("canvas");
+var processing = new Processing(canvas, function(processing) {
+    processing.size(800, 500);
+    processing.background(0xFFF);
+    var mouseIsPressed = false;
+    processing.mousePressed = function() {
+        mouseIsPressed = true;
+    };
+    processing.mouseReleased = function() {
+        mouseIsPressed = false;
+    };
+    var keyIsPressed = false;
+    processing.keyPressed = function() {
+        keyIsPressed = true;
+    };
+    processing.keyReleased = function() {
+        keyIsPressed = false;
+    };
+
+    var rotateFn = processing.rotate;
+    processing.rotate = function(angle) {
+        rotateFn(processing.radians(angle));
+    };
+    with(processing) {
+        background(255, 255, 255);
+        /************************
+         * Draw shape *
+         ************************/
+        var randColor = function() {
+            fill(random(0, 255), random(0, 255), random(0, 255));
+            stroke(random(0, 255), random(0, 255), random(0, 255));
+            strokeWeight(random(0, 20));
+        };
+
+        var drawShape = function(x, y, radius) {
+            randColor();
+            r = random(0,255);
+            var newWidth = width*1/4;
+            if (r > 150 ) {
+                ellipse(x, y, radius, radius);
+            } else {
+                rectMode(CENTER);
+                rect(x, y, newWidth, newWidth, radius);
+            }
+
+            var newRadius = radius/1.5;
+            if (newRadius >= 2) {
+                drawShape(x, y, newRadius);
+            }
+        };
+
+        drawShape(width/2, height/2, 380);
+
+    }
+    if (typeof draw !== 'undefined') processing.draw = draw;
+});
+</script>
+</div>
+</div>
+</body>
+</html>
