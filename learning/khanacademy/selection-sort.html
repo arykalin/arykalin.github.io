@@ -51,80 +51,94 @@
                     rotateFn(processing.radians(angle));
                 };
                 with(processing) {
-                    background(255, 255, 255);
-                    for (var l = 0; l < (9 / 10) * width; l += 200) {
-                        stroke(0);
+                    background(255);
+                    var spaceBetween = 85;
+                    var yPos= 0;
+                    for (var l = 0; l < (9/10)*width; l += 94) {
+                        stroke(0, 0, 0);
                         line(l, 0, l, height);
                     }
                     /************************
                      * Visualize the array *
                      ************************/
-                    var displayArray = function(array, pos, step) {
+                    var showArray = function(array, arrayStep, canvasPos) {
                         textFont(createFont("monospace"), 12);
-                        fill(0);
-                        // text(array, 15 + pos, 40 + step);
-                        println("Drawing array from "+step);
-                        text(array, step, 40 + pos);
+                        fill(0, 0, 0);
+                        text(array, 19 + canvasPos, 40 + arrayStep);
                     };
-
+                    /**********************************************
+                     * Functions used to selection sort an array *
+                     ***********************************************/
                     var swap = function(array, firstIndex, secondIndex) {
                         var temp = array[firstIndex];
                         array[firstIndex] = array[secondIndex];
                         array[secondIndex] = temp;
                     };
-
-                    var indexOfMinimum = function(array, startIndex, canvas_pos, step) {
-
+                    var indexOfMinimum = function(array, startIndex, arrayStep, canvasPos) {
                         var minValue = array[startIndex];
                         var minIndex = startIndex;
-
                         for(var i = minIndex + 1; i < array.length; i++) {
                             if(array[i] < minValue) {
                                 minIndex = i;
                                 minValue = array[i];
                             }
                         }
-                        var x1 = step+(startIndex*8)+(minIndex*8)+10;
-                        println("step:"+step+"+startIndex:"+startIndex+"+minIndex:"+minIndex+"+"+10);
-                        var y1 = canvas_pos+50;
-                        var x2 = step+(startIndex*8)+(minIndex*8)+10;
-                        var y2 = canvas_pos+70;
-                        println("Drawing a line at x1:"+x1+" y1:"+y1+" x2:"+x2+" y2:"+y2);
-                        line(x1,y1,x2,y2);
-                        strokeWeight(3);
-                        point(x1,y1);
-                        strokeWeight(1);
-                        displayArray(array, canvas_pos, step);
-                        // x1 = 0;
-                        // x2 = 0;
-                        // y1 = 0;
-                        // y2 = 0;
+                        // Display each iteration of the sort on the canvas
+                        showArray(array, arrayStep, canvasPos);
                         return minIndex;
                     };
+                    var selectionSort = function(array, canvasPos) {
+                        var valueMin;
+                        var arrayStep = 0;
 
-                    var selectionSort = function(array, canvas_step) {
-                        var pos = 0;
-                        for(pos ; pos < array.length ;pos++ ) {
-                            println("Looking at pos "+pos);
-                            canvas_pos = pos*50;
-                            var mi = indexOfMinimum(array, pos, canvas_pos, canvas_step);
-                            println("Index of minimum of array "+array+" at start "+pos+" is "+mi+" which is number "+array[mi]);
-                            swap(array,pos ,mi);
-                            println("array after swap is: "+array);
+                        for (var i = 0; i < array.length; i++) {
+                            valueMin = indexOfMinimum(array, i, arrayStep, canvasPos);
+                            swap(array, valueMin, i);
+                            arrayStep += spaceBetween;
+
+                            if (i === 0) {
+                                var swapFromX = 20+(valueMin*18 + canvasPos);
+                                var swapToX = (canvasPos+22);
+                                var swapFromY = yPos + 46;
+                                var swapToY = yPos + 110;
+                                line(swapFromX, swapFromY, swapToX, swapToY);
+                                yPos += spaceBetween;
+                            } else if (i === 1) {
+                                var swapFromX = (valueMin*6.88 + canvasPos+49);
+                                var swapToX = (canvasPos+34);
+                                var swapFromY = yPos + 46;
+                                var swapToY = yPos + 110;
+                                line(swapFromX, swapFromY, swapToX, swapToY);
+
+                                yPos = 0;
+                            } else if (i === 2) {
+                                var swapFromX = (valueMin*12.0 + canvasPos+19)*1.042;
+                                var swapToX = (canvasPos+44)*1.031;
+                                var swapFromY = yPos + 217;
+                                var swapToY = yPos + 282;
+                                line(swapFromX, swapFromY, swapToX, swapToY);
+                                yPos = 0;
+                            } else if (i === 3){
+                                var swapFromX = (valueMin*9.2 + canvasPos+35)*1.069;
+                                var swapToX = ((canvasPos)*1.008)+75;
+                                var swapFromY = yPos + 300;
+                                var swapToY = yPos + 365;
+                                line(swapFromX, swapFromY, swapToX, swapToY);
+                                yPos = 0;
+                            }
                         }
                     };
-
-                    var array1 = [67,2, 1, 5, 78];
-                    array = selectionSort(array1,10);
-                    //
-                    // var array2 = [34,7,12,34,7,89,113];
-                    // array = selectionSort(array2,210);
-                    //
-                    // var array3 = [2, 16, 5, 1, 78,67,4,12444];
-                    // array = selectionSort(array3,410);
-                    //
-                    // var array4 = [45,7,3,67,123,5,6,1];
-                    // array = selectionSort(array4,610);
+                    /*******************************
+                     * Input and display the data *
+                     ********************************/
+                    var array = [0, 1, 3, 16, 1]; // Default array
+                    selectionSort(array, 0);
+                    var array2 = [35, 25, 132, 6, 2];  // Reverse sorted values
+                    selectionSort(array2, 84);
+                    var array3 = [9, 12, 1, 8, 1]; // Few identical values
+                    selectionSort(array3, 185);
+                    var array4 = [48, 1, 27, 35, 45]; // One value is out of order
+                    selectionSort(array4, 272);
                 }
                 if (typeof draw !== 'undefined') processing.draw = draw;
             });
